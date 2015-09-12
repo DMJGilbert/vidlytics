@@ -19,16 +19,21 @@ angular.module('vidlytics').config(['$urlRouterProvider', '$stateProvider', '$lo
 				templateUrl: 'client/home/views/index.ng.html',
 				controller: 'HomeCtrl'
 			})
-			.state('newCustomer', {
-				url: '/customer/new',
-				templateUrl: 'client/customers/views/new/index.ng.html',
-				controller: 'NewCustomerCtrl'
+			.state('login', {
+				url: '/login',
+				templateUrl: 'client/login/views/index.ng.html',
+				controller: 'LoginCtrl'
 			})
 			.state('customer', {
-				url: '/customer/:customerId',
+				url: '/customer',
 				templateUrl: 'client/customers/views/index.ng.html',
-				controller: 'CustomerCtrl'
-			})
+				controller: 'CustomerCtrl',
+				resolve: {
+					"currentUser": ["$meteor", function ($meteor) {
+						return $meteor.requireUser();
+          			}]
+				}
+			});
 
 		$urlRouterProvider.otherwise('/');
 
