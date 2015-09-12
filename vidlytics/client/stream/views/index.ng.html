@@ -17,6 +17,15 @@
 
 	<iframe id="video" ng-hide="!stream.address" ng-src="{{ trustSrc(stream.address) }}"></iframe>
 
+	<div id="info">
+		<h2>Information</h2>
+		Users:
+		<br> iFrame:
+		<textarea>/api/video?origin={{stream.base64}}</textarea>
+	</div>
+
+	<div class="clearfix"></div>
+
 	<canvas style="width: 50%;" id="radar" class="chart chart-radar leftGraph" chart-data="streamData" chart-labels="streamLabels">
 	</canvas>
 	<canvas style="width: 50%;" id="line" class="chart chart-line rightGraph" chart-data="userData" chart-labels="userLabels" chart-legend="true" chart-series="userSeries" chart-click="onClick">
@@ -212,7 +221,7 @@
 			});
 
 			google.maps.event.addListener(marker, "click", function () {
-				window.location = '/stream/'+stream._id+'/user/'+this._id;
+				window.location = '/stream/' + stream._id + '/user/' + this._id;
 			});
 		}
 	</script>
