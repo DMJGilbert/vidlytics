@@ -19,7 +19,7 @@ app.get('/', function (req, res) {
 });
 
 
-var url = "https://rrr.sz.xlcdn.com/?account=streamzilla&file=Streamzilla_Demo.smil&type=streaming&service=usp&protocol=https&output=player&poster=Streamzilla_Demo.png";
+var url = "http://rrr.sz.xlcdn.com/?account=streamzilla&file=Streamzilla_Demo.smil&type=streaming&service=usp&protocol=https&output=player&poster=Streamzilla_Demo.png";
 app.get('/video', function (req, res) {
 	request(url, function (err, resp, body) {
 
@@ -29,8 +29,6 @@ app.get('/video', function (req, res) {
 		res.send(injected);
 	});
 })
-
-app.get('/testProxy', )
 
 server.listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));
