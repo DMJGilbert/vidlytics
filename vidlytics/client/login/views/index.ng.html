@@ -1,0 +1,23 @@
+<div id="header">
+	<a href="/"><img id="logo" src="/images/light-logo.svg"></a>
+</div>
+<form ng-hide="register" class="userForm">
+	<h2>Sign in</h2>
+	<input type="email" ng-model="email" placeholder="Email...">
+	<input type="password" ng-model="password" placeholder="Password...">
+
+	<button ng-click="login()">Login</button>
+	<a ng-click="register=true">Register</a>
+</form>
+
+<form ng-show="register" class="userForm">
+	<h2>Create account</h2>
+	<input type="email" ng-model="email" placeholder="Email...">
+	<input type="password" ng-model="password" placeholder="Password...">
+	<input type="text" placeholder="Name...">
+	<input type="text" placeholder="Company...">
+	<input type="text" placeholder="Role...">
+
+	<button ng-click="registerUser()">Register</button>
+	<a ng-click="register=false">Login</a>
+</form>

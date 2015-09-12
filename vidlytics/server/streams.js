@@ -1,30 +1,23 @@
-Meteor.publish("streams", function () {
-	return Streams.find({
-		$or: [
-			{
-				$and: [
-					{
-						"public": true
-					},
-					{
-						"public": {
-							$exists: true
-						}
-					}
-      			]
-			},
-			{
-				$and: [
-					{
-						owner: this.userId
-					},
-					{
-						owner: {
-							$exists: true
-						}
-					}
-      			]
-			}
-    	]
+Meteor.startup(function () {
+	Streams.allow({
+		insert: function (userId, stream) {
+			return userId;
+		},
+		update: function (userId, stream) {
+			return stream.customerId == userId;
+		},
+		remove: function (userId, stream) {
+			return stream.customerId == userId;
+		}
 	});
+});
+
+Meteor.publish('streams', function () {
+	if (this.userId) {
+		return Streams.find({
+			'customerId': this.userId
+		});
+	} else {
+		return {};
+	}
 });

@@ -1,0 +1,61 @@
+#header {
+	height: 17vh;
+	width: 100%;
+	background-color: #8494b2;
+	position: relative;
+	top: 0;
+	text-align: center;
+}
+
+#header #logo {
+	padding-top: 50px;
+	display: block;
+	max-width: 250px;
+	margin: 0 auto;
+}
+
+.userForm {
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.userForm h2 {
+	padding-top: 30px;
+	font-family: 'Fira Sans', sans-serif;
+	font-weight: 300;
+	text-transform: uppercase;
+	color: #8494b2;
+	letter-spacing: 5px;
+}
+
+.userForm input {
+	width: 100%;
+	font-size: 16px;
+	color: #8494b2;
+	padding: 20px 15px;
+	border: 0 solid transparent;
+	margin: 5px 0;
+	border-left: 5px solid transparent;
+}
+
+.userForm input:focus {
+	outline: none;
+	border-left: 5px solid #8494b2;
+}
+
+.userForm button,
+.userForm a {
+	font-family: 'Fira Sans', sans-serif;
+	font-weight: 300;
+	text-transform: uppercase;
+	color: #f2f2f2;
+	padding: 10px;
+	letter-spacing: 5px;
+	border: 0 solid transparent;
+	width: 200px;
+	display: block;
+	cursor: pointer;
+	background: #8494b2;
+	text-align: center;
+	margin: 10px auto;
+}
