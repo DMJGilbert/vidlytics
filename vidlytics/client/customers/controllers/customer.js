@@ -10,18 +10,6 @@ angular.module("vidlytics").controller("CustomerCtrl", ['$scope', '$stateParams'
 			$('#addStreamModal').modal('show');
 		}
 
-<<<<<<< HEAD
-		$scope.addStream = function () {
-			$scope.streams.push($scope.newStream);
-
-			Meteor.call('addStream', {
-				customerId: $scope.customer._id,
-				name: $scope.newStream.name,
-				address: $scope.newStream.address
-			}, function (error, data) {
-				if (data == 'success') {
-					$scope.newStream = '';
-=======
 		$scope.selectStream = function (stream) {
 			$scope.selectedStream = stream;
 
@@ -45,15 +33,10 @@ angular.module("vidlytics").controller("CustomerCtrl", ['$scope', '$stateParams'
 			}, function (er, _id) {
 				if (_id) {
 					$scope.newStream = {};
->>>>>>> origin/master
 				}
 			});
 		};
 
-<<<<<<< HEAD
-		$scope.removeStream = function (stream) {
-			$scope.streams.splice($scope.streams.indexOf(stream), 1);
-=======
 		$scope.removeStream = function () {
 			for (var i = 0; i < $scope.streams.length; i += 1) {
 				if ($scope.selectedStream._id == $scope.streams[i]._id) {
@@ -61,7 +44,6 @@ angular.module("vidlytics").controller("CustomerCtrl", ['$scope', '$stateParams'
 					$scope.selectedStream = undefined;
 				}
 			}
->>>>>>> origin/master
 		};
 
 	}]);
