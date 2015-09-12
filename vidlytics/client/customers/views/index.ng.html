@@ -1,21 +1,16 @@
 <div>
 	<div class="ui menu">
-		<a class="active item">
-    		Home
-  		</a>
-		<a class="item">
-    		Messages
-  		</a>
-		<a class="item">
-    		Friends
-  		</a>
 	</div>
 	<div>
-		<div id="leftFilter" class="ui segment">
+		<button ng-click="showAddStream();" class="ui button">
+			New stream
+		</button>
+		<div id="filter" class="ui segment">
 			<div class="ui relaxed divided list">
 				<div class="item">
 					<div class="content">
 						<div class="header">Stream</div>
+						<div ng-repeat="stream in streams"> ... </div>
 					</div>
 				</div>
 				<div class="item">
@@ -30,8 +25,35 @@
 				</div>
 			</div>
 		</div>
-		<div id="rightContent" class="ui segment">
+		<div id="content" class="ui segment">
 
+		</div>
+	</div>
+</div>
+
+<div id="addStreamModal" class="ui modal">
+	<i class="close icon"></i>
+	<div class="header">
+		New stream
+	</div>
+	<div class="content">
+		<form class="ui form">
+			<div class="field">
+				<label>Stream name</label>
+				<input ng-model="newStream.name" type="text" name="stream-name" placeholder="Stream name">
+			</div>
+			<div class="field">
+				<label>Stream address</label>
+				<input ng-model="newStream.address" type="text" name="stream-address" placeholder="Stream address">
+			</div>
+		</form>
+	</div>
+	<div class="actions">
+		<div class="ui black deny button">
+			Cancel
+		</div>
+		<div ng-click="addStream();" class="ui positive right labeled icon button">
+			Save
 		</div>
 	</div>
 </div>
