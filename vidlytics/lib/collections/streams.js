@@ -1,11 +1,15 @@
 Streams = new Mongo.Collection('streams');
 
-var btoa = Meteor.npmRequire('btoa')
+var base64urlEncode;
 
-var base64urlEncode = function (unencoded) {
-	var encoded = btoa(unencoded);
-	return encoded.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-};
+if (Meteor.isServer) {
+	var btoa = Meteor.npmRequire('btoa');
+
+	base64urlEncode = function (unencoded) {
+		var encoded = btoa(unencoded);
+		return encoded.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+	};
+}
 
 Streams.helpers({});
 
@@ -51,7 +55,8 @@ Streams.attachSchema({
 		type: String
 	},
 	base64: {
-		type: String
+		type: String,
+		optional: true
 	},
 	name: {
 		type: String,
@@ -69,7 +74,9 @@ Streams.attachSchema({
 
 Streams.before.insert(function (userId, doc) {
 	doc.createdAt = new Date();
-	doc.base64 = base64urlEncode(doc.address);
+	if (Meteor.isServer) {
+		doc.base64 = base64urlEncode(doc.address);
+	}
 	doc.customerId = userId;
 	doc.viewers = [];
 });

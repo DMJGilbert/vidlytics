@@ -24,10 +24,6 @@ app.get('/crossdomain.xml', function(req, res) {
 	+'<allow-access-from domain="*" to-ports="*" secure="false"/><site-control permitted-cross-domain-policies="all"/><allow-http-request-headers-from domain="*" headers="*"/></cross-domain-policy>');
 });
 
-
-
-
-
 app.get('/video', function(req, res) {
 	var url = "http://rrr.sz.xlcdn.com/?account=streamzilla&file=Streamzilla_Demo.smil&type=streaming&service=usp&protocol=https&output=player&poster=Streamzilla_Demo.png";
     request(url, function(err, resp, body) {
