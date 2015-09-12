@@ -102,7 +102,16 @@ var proxyEndpoint = function (req) {
 
 			var stream = Streams.find({
 				base64: base64
-			})
+			});
+
+			stream.viewers.push({
+				ip: req.request.headers['x-forwarded-for'],
+				device: req.request.headers['user-agent'],
+				long: 0,
+				lat: 0,
+				started: new Date(),
+				event: []
+			});
 
 			obj.data = newurl;
 

@@ -17,6 +17,10 @@ a.back {
 	margin-bottom: 30px;
 }
 
+.clearfix {
+	clear: both;
+}
+
 #videoTitle {
 	margin: 0 auto;
 	display: block;
@@ -27,9 +31,16 @@ a.back {
 }
 
 #video {
+	float: left;
 	width: 720px;
 	height: 405px;
-	margin: 0 auto;
+	display: block;
+}
+
+#info {
+	float: right;
+	width: calc(100% - 740px);
+	height: 405px;
 	display: block;
 }
 
@@ -53,4 +64,12 @@ a.back {
 
 .rightGraph {
 	float: right;
+}
+
+textarea {
+	display: block;
+	width: 98%;
+	height: 80px;
+	border: 0px solid transparent;
+	padding: 10px;
 }
