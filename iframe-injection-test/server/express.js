@@ -27,8 +27,9 @@ app.get('/crossdomain.xml', function(req, res) {
 
 
 
-var url = "http://rrr.sz.xlcdn.com/?account=streamzilla&file=Streamzilla_Demo.smil&type=streaming&service=usp&protocol=https&output=player&poster=Streamzilla_Demo.png";
+
 app.get('/video', function(req, res) {
+	var url = "http://rrr.sz.xlcdn.com/?account=streamzilla&file=Streamzilla_Demo.smil&type=streaming&service=usp&protocol=https&output=player&poster=Streamzilla_Demo.png";
     request(url, function(err, resp, body) {
 
         var injectThis = fs.readFileSync('server/injection.js', 'utf8');
