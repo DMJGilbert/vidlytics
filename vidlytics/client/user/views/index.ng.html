@@ -1,0 +1,22 @@
+<div id="header" class="app">
+	<div class="container-vid">
+		<a href="/"><img id="logo" src="/images/light-logo.svg">
+		</a>
+
+		<a class="logout" ng-click="logout()"><i class="fa fa-lock"></i> Logout</a>
+	</div>
+</div>
+
+<div class="container-vid">
+	<a class="back" ng-href="/dashboard"><i class="fa fa-angle-left"></i> Back</a>
+</div>
+
+<div id="stream-container">
+	<h1 id="videoTitle">{{ user.ipAddress }}</h1>
+
+	<canvas style="width: 50%;" id="radar" class="chart chart-radar leftGraph" chart-data="streamData" chart-labels="streamLabels">
+	</canvas>
+	<canvas style="width: 50%;" id="line" class="chart chart-line rightGraph" chart-data="userData" chart-labels="userLabels" chart-legend="true" chart-series="userSeries" chart-click="onClick">
+	</canvas>
+
+</div>
