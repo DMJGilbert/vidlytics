@@ -1,10 +1,15 @@
-angular.module("vidlytics").controller("CustomerCtrl", ['$scope', '$stateParams', '$rootScope', '$meteor',
-	function ($scope, $stateParams, $rootScope, $meteor) {
+angular.module("vidlytics").controller("DashboardCtrl", ['$scope', '$stateParams', '$rootScope', '$meteor', '$location',
+	function ($scope, $stateParams, $rootScope, $meteor, $location) {
 
 		$scope.customer = $rootScope.currentUser;
 
 		$meteor.subscribe('streams');
 		$scope.streams = $meteor.collection(Streams);
+
+		$scope.logout = function (){
+			Meteor.logout();
+			$location.path('/');
+		}
 
 		$scope.showAddStream = function () {
 			$('#addStreamModal').modal('show');
@@ -18,8 +23,11 @@ angular.module("vidlytics").controller("CustomerCtrl", ['$scope', '$stateParams'
 				[65, 59, 90, 81, 56, 55]
 			];
 
-			$scope.userLabels = ["AWS", "Akami"];
-			$scope.userData = [3, 5];
+			$scope.userLabels = ["January", "February", "March", "April", "May", "June", "July"];
+			$scope.userSeries = ['No. of Users'];
+			$scope.userData = [
+				[0, 0, 1, 2, 2, 3, 5]
+			];
 		}
 
 		$scope.addStream = function () {

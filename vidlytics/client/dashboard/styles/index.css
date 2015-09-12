@@ -1,0 +1,32 @@
+#header.app {
+	height: 8.5vh;
+	width: 100%;
+	background-color: #8494b2;
+	position: relative;
+	top: 0;
+}
+
+#header.app #logo {
+	display: block;
+	max-width: 150px;
+	margin: 0 50px;
+	padding-top: 20px;
+}
+
+#header.app a.logout{
+	display: block;
+	position: absolute;
+	top: 20px;
+	right: 50px;
+	font-family: 'Fira Sans', sans-serif;
+	font-weight: 300;
+	text-transform: uppercase;
+	color: #f2f2f2;
+	padding: 10px;
+	letter-spacing: 5px;
+	border: 1px solid #f2f2f2;
+	max-width: 250px;
+	display: block;
+	cursor: pointer;
+	opacity: 0.7;
+}

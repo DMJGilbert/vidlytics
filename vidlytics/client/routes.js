@@ -24,10 +24,10 @@ angular.module('vidlytics').config(['$urlRouterProvider', '$stateProvider', '$lo
 				templateUrl: 'client/login/views/index.ng.html',
 				controller: 'LoginCtrl'
 			})
-			.state('customer', {
-				url: '/customer',
-				templateUrl: 'client/customers/views/index.ng.html',
-				controller: 'CustomerCtrl',
+			.state('dashboard', {
+				url: '/dashboard',
+				templateUrl: 'client/dashboard/views/index.ng.html',
+				controller: 'DashboardCtrl',
 				resolve: {
 					"currentUser": ["$meteor", function ($meteor) {
 						return $meteor.requireUser();
