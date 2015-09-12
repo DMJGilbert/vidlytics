@@ -18,11 +18,8 @@ angular.module("vidlytics").controller("CustomerCtrl", ['$scope', '$stateParams'
 				[65, 59, 90, 81, 56, 55]
 			];
 
-			$scope.userLabels = ["January", "February", "March", "April", "May", "June", "July"];
-			$scope.userSeries = ['No. of Users'];
-			$scope.userData = [
-				[0, 0, 1, 2, 2, 3, 5]
-			];
+			$scope.userLabels = ["AWS", "Akami"];
+			$scope.userData = [3, 5];
 		}
 
 		$scope.addStream = function () {

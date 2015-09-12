@@ -15,16 +15,6 @@
 						</button>
 					</div>
 				</div>
-				<div class="item">
-					<div class="content">
-						<div class="header">CDN</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="content">
-						<div class="header">User</div>
-					</div>
-				</div>
 			</div>
 		</div>
 		<div id="content" class="ui segment">
@@ -35,7 +25,7 @@
 			<div>
 				<canvas style="width: 50%;" id="radar" class="chart chart-radar" chart-data="streamData" chart-labels="streamLabels">
 				</canvas>
-				<canvas style="width: 50%;" id="line" class="chart chart-line" chart-data="userData" chart-labels="userLabels" chart-legend="true" chart-series="userSeries" chart-click="onClick">
+				<canvas id="doughnut" class="chart chart-doughnut" chart-data="userData" chart-labels="userLabels">
 				</canvas>
 			</div>
 		</div>
