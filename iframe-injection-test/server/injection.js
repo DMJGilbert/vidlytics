@@ -63,8 +63,50 @@ window.addEventListener("load", function load(event){
 	}
 
 
+	base64urlEncode = function(unencoded) {
+	  var encoded = window.btoa(unencoded);
+	  return encoded.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+	};
 
-	playerInstance.onMeta( function(event) { console.log(event.metadata);});
+	window.jQuery.ajax = (function() {
+		console.log("overwriting");
+	    var original_func = jQuery.ajax;
+
+        return function() {
+			console.log("ajax");
+
+			if (arguments.length == 1) {
+				console.log("length1");
+				var url = arguments[0]['url'];
+				console.log(url);
+				console.log(arguments[0]);
+
+				// // check if this is the url asking for the first m3u8
+				// if (url.indexOf('protocol=http&output=m3u8') > -1) {
+				// 	console.log("found playlist");
+				// 	// replace their url with our own
+				// }
+
+				var newurl = 'http://localhost:3000/proxy/?orig=' + base64urlEncode(url);
+
+				arguments[0]['url'] = newurl;
+
+            	return original_func(arguments[0]);
+			}
+			else if (arguments.length == 2) {
+				console.log("length2");
+				var url = arguments[0];
+            	return original_func(arguments[0], arguments[1]);
+			}
+			else {
+				alert("bad");
+			}
+			console.log("url");
+        }
+
+	})();
+
+	//playerInstance.onMeta( function(event) { console.log(event.metadata);});
 
 
 },false);

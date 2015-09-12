@@ -62,7 +62,13 @@ window.addEventListener("load", function load(event){
 	    }
 	}
 
-
+    playerInstance.onQualityLevels( function(array) {
+        console.log("new qualities");
+        for (key in array.levels) {
+            console.log(key);
+            console.log(array.levels[key]);
+        }
+    });
 
 	playerInstance.onMeta( function(event) { console.log(event.metadata);});
 
