@@ -8,14 +8,212 @@
 </div>
 
 <div class="container-vid">
-	<a class="back" ng-click="showAddStream()"><i class="fa fa-angle-left"></i> Back</a>
+	<a class="back" ng-href="/dashboard"><i class="fa fa-angle-left"></i> Back</a>
+	<a class="add" ng-click="removeStream()"><i class="fa fa-minus"></i> Delete stream</a>
 </div>
 
 <div id="stream-container">
-	<iframe ng-src="stream.address"></iframe>
+	<h1 id="videoTitle">{{ stream.name }}</h1>
 
-	<canvas style="width: 50%;" id="radar" class="chart chart-radar" chart-data="streamData" chart-labels="streamLabels">
+	<iframe id="video" ng-hide="!stream.address" ng-src="{{ trustSrc(stream.address) }}"></iframe>
+
+	<canvas style="width: 50%;" id="radar" class="chart chart-radar leftGraph" chart-data="streamData" chart-labels="streamLabels">
 	</canvas>
-	<canvas style="width: 50%;" id="line" class="chart chart-line" chart-data="userData" chart-labels="userLabels" chart-legend="true" chart-series="userSeries" chart-click="onClick">
+	<canvas style="width: 50%;" id="line" class="chart chart-line rightGraph" chart-data="userData" chart-labels="userLabels" chart-legend="true" chart-series="userSeries" chart-click="onClick">
 	</canvas>
+
+	<div id="map"></div>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWvj_ePGqASr2yz3h5rs19v3GyWPuAUd8&sensor=false&callback=initialise">
+	</script>
+	<script>
+		var map;
+		var stream = {};
+
+		function initialise() {
+			var styles = [
+				{
+					"featureType": "water",
+					"stylers": [
+						{
+							"hue": "#0077ff"
+						},
+						{
+							"color": "#8494b2"
+						},
+						{
+							"visibility": "on"
+						}
+    ]
+  }, {
+					"featureType": "administrative.land_parcel",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+    ]
+  }, {
+					"featureType": "poi.attraction",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+    ]
+  }, {
+					"featureType": "poi.government",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+    ]
+  }, {
+					"featureType": "poi.medical",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+    ]
+  }, {
+					"featureType": "poi.school",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+    ]
+  }, {
+					"featureType": "landscape.man_made",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+    ]
+  }, {
+					"featureType": "poi.sports_complex",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+    ]
+  }, {
+					"featureType": "poi.business",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+    ]
+  }, {
+					"featureType": "poi.park",
+					"elementType": "labels",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+    ]
+  }, {
+					"featureType": "poi.place_of_worship",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+    ]
+  }, {
+					"featureType": "road.highway",
+					"elementType": "geometry",
+					"stylers": [
+						{
+							"visibility": "on"
+						},
+						{
+							"weight": 0.4
+						},
+						{
+							"color": "#d6d5d6"
+						}
+    ]
+  }, {}, {
+					"featureType": "poi.park",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+    ]
+  }, {
+					"featureType": "landscape.natural",
+					"stylers": [
+						{
+							"color": "#828080"
+						},
+						{
+							"visibility": "off"
+						}
+    ]
+  }, {
+					"featureType": "poi.park",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+    ]
+  }, {
+					"featureType": "road.highway",
+					"elementType": "labels",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+    ]
+  }, {
+					"featureType": "transit.station",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+    ]
+  }, {}
+];
+
+			var mapOptions = {
+				center: {
+					lat: -34.397,
+					lng: 150.644
+				},
+				zoom: 8,
+				styles: styles,
+
+				panControl: false, // Set to false to disable
+				mapTypeControl: false, // Disable Map/Satellite switch
+				scaleControl: false, // Set to false to hide scale
+				streetViewControl: false, // Set to disable to hide street view
+				overviewMapControl: false, // Set to false to remove overview control
+				rotateControl: false // Set to false to disable rotate control
+			}
+
+			map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+			createMarker();
+		}
+
+		function createMarker() {
+			var image = {
+				size: new google.maps.Size(50, 50),
+				scaledSize: new google.maps.Size(50, 50),
+				anchor: new google.maps.Point(25, 25),
+				origin: new google.maps.Point(0, 0),
+				url: '/images/user.png'
+			}
+
+			var marker = new google.maps.Marker({
+				position: {
+					lat: -34.397,
+					lng: 150.644
+				},
+				map: map,
+				icon: image,
+				_id: 123
+			});
+
+			google.maps.event.addListener(marker, "click", function () {
+				console.log(this);
+			});
+		}
+	</script>
 </div>

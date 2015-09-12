@@ -44,13 +44,4 @@ angular.module("vidlytics").controller("DashboardCtrl", ['$scope', '$stateParams
 			});
 		};
 
-		$scope.removeStream = function () {
-			for (var i = 0; i < $scope.streams.length; i += 1) {
-				if ($scope.selectedStream._id == $scope.streams[i]._id) {
-					$scope.streams.splice(i, 1);
-					$scope.selectedStream = undefined;
-				}
-			}
-		};
-
 	}]);
