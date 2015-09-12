@@ -12,6 +12,7 @@ angular.module("vidlytics").controller("StreamCtrl", ['$scope', '$stateParams', 
 			if ($scope.streams[i]._id == $location.path().split("/")[2]) {
 				$scope.stream = $scope.streams[i];
 				stream = $scope.streams[i];
+				break;
 			}
 		}
 

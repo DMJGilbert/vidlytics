@@ -38,6 +38,11 @@ angular.module('vidlytics').config(['$urlRouterProvider', '$stateProvider', '$lo
 				url: '/stream/:id',
 				templateUrl: 'client/stream/views/index.ng.html',
 				controller: 'StreamCtrl'
+			})
+			.state('user', {
+				url: '/stream/:id/user/:userId',
+				templateUrl: 'client/user/views/index.ng.html',
+				controller: 'UserCtrl'
 			});
 
 		$urlRouterProvider.otherwise('/');

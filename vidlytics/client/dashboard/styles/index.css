@@ -9,7 +9,7 @@
 .container-vid {
 	max-width: 90%;
 	margin: 0 auto;
-	overflow: auto;
+	overflow: hidden;
 }
 
 #header.app #logo {
@@ -70,7 +70,7 @@ a.add {
 #stream-container {
 	max-width: 92%;
 	margin: 0 auto;
-	overflow: auto;
+	overflow: hidden;
 }
 
 #stream-container .stream {
