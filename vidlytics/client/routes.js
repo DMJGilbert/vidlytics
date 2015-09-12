@@ -14,16 +14,16 @@ angular.module('vidlytics').config(['$urlRouterProvider', '$stateProvider', '$lo
 		$locationProvider.html5Mode(true);
 
 		$stateProvider
-			.state('newCustomer', {
-				url: '/customer/new',
-				templateUrl: 'client/customers/views/new/index.ng.html',
-				controller: 'NewCustomerCtrl'
-			})
 			.state('customer', {
-				url: '/customer/:customerId',
+				url: '/customer',
 				templateUrl: 'client/customers/views/index.ng.html',
-				controller: 'CustomerCtrl'
-			})
+				controller: 'CustomerCtrl',
+				resolve: {
+					"currentUser": ["$meteor", function ($meteor) {
+						return $meteor.requireUser();
+          			}]
+				}
+			});
 
 		$urlRouterProvider.otherwise('/');
 
