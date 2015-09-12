@@ -1,1 +1,1 @@
-angular.module('vidlytics', ['angular-meteor', 'ui.router']);
+angular.module('vidlytics', ['angular-meteor', 'ui.router', 'chart.js']);

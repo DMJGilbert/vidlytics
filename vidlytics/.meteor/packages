@@ -14,3 +14,7 @@ accounts-password
 accounts-ui
 semantic:ui-css
 urigo:angular-blaze-template
+aldeed:collection2
+dburles:collection-helpers
+matb33:collection-hooks
+sebastianilves:angular-chart-js

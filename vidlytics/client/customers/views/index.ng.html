@@ -10,7 +10,9 @@
 				<div class="item">
 					<div class="content">
 						<div class="header">Stream</div>
-						<div ng-repeat="stream in streams"> ... </div>
+						<button ng-click="selectStream(stream);" ng-repeat="stream in streams">
+							{{ stream.name }}
+						</button>
 					</div>
 				</div>
 				<div class="item">
@@ -26,7 +28,16 @@
 			</div>
 		</div>
 		<div id="content" class="ui segment">
-
+			{{ selectedStream }}
+			<button ng-show="selectedStream" ng-click="removeStream();" class="ui button">
+				Delete stream
+			</button>
+			<div>
+				<canvas style="width: 50%;" id="radar" class="chart chart-radar" chart-data="streamData" chart-labels="streamLabels">
+				</canvas>
+				<canvas style="width: 50%;" id="line" class="chart chart-line" chart-data="userData" chart-labels="userLabels" chart-legend="true" chart-series="userSeries" chart-click="onClick">
+				</canvas>
+			</div>
 		</div>
 	</div>
 </div>
