@@ -1,5 +1,5 @@
-angular.module("vidlytics").controller("StreamCtrl", ['$scope', '$stateParams', '$rootScope', '$meteor', '$location',
-	function ($scope, $stateParams, $rootScope, $meteor, $location) {
+angular.module("vidlytics").controller("StreamCtrl", ['$scope', '$stateParams', '$rootScope', '$meteor', '$location', '$sce',
+	function ($scope, $stateParams, $rootScope, $meteor, $location, $sce) {
 
 		$scope.customer = $rootScope.currentUser;
 
@@ -8,35 +8,41 @@ angular.module("vidlytics").controller("StreamCtrl", ['$scope', '$stateParams', 
 		$meteor.subscribe('streams');
 		$scope.streams = $meteor.collection(Streams);
 
+		for (var i = 0; i < $scope.streams.length; i += 1) {
+			if ($scope.streams[i]._id == $location.path().split("/")[2]) {
+				$scope.stream = $scope.streams[i];
+				stream = $scope.streams[i];
+			}
+		}
+
+		$scope.trustSrc = function (url) {
+			return $sce.trustAsResourceUrl(url);
+		}
+
 		$scope.logout = function () {
 			Meteor.logout();
 			$location.path('/');
 		}
 
-		function initMap() {
-			var map = new google.maps.Map(document.getElementById('map'), {
-				zoom: 4,
-				center: {
-					lat: -33,
-					lng: 151
-				},
-				disableDefaultUI: true
-			});
-		}
-
-		$scope.selectStream = function (stream) {
-			$scope.selectedStream = stream;
-
-			$scope.streamLabels = ["180p", "280p", "400p", "480p", "720p", "1080p"];
-			$scope.streamData = [
+		$scope.streamLabels = ["180p", "280p", "400p", "480p", "720p", "1080p"];
+		$scope.streamData = [
 				[65, 59, 90, 81, 56, 55]
 			];
 
-			$scope.userLabels = ["January", "February", "March", "April", "May", "June", "July"];
-			$scope.userSeries = ['No. of Users'];
-			$scope.userData = [
+		$scope.userLabels = ["January", "February", "March", "April", "May", "June", "July"];
+		$scope.userSeries = ['No. of Users'];
+		$scope.userData = [
 				[0, 0, 1, 2, 2, 3, 5]
 			];
-		}
+
+		$scope.removeStream = function () {
+			for (var i = 0; i < $scope.streams.length; i += 1) {
+				if ($scope.stream._id == $scope.streams[i]._id) {
+					$scope.streams.splice(i, 1);
+					$scope.stream = undefined;
+					$location.path('/dashboard');
+				}
+			}
+		};
 
 	}]);

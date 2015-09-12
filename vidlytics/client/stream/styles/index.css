@@ -14,4 +14,43 @@ a.back {
 	cursor: pointer;
 	opacity: 0.7;
 	float: left;
+	margin-bottom: 30px;
+}
+
+#videoTitle {
+	margin: 0 auto;
+	display: block;
+	width: 100%;
+	color: #8494B2;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+#video {
+	width: 720px;
+	height: 405px;
+	margin: 0 auto;
+	display: block;
+}
+
+#map {
+	margin-top: 30px;
+	height: 400px;
+	width: 100%;
+	margin-bottom: 30px;
+}
+
+.chart-container {
+	width: 49%;
+	display: inline-block;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.leftGraph {
+	float: left;
+}
+
+.rightGraph {
+	float: right;
 }
