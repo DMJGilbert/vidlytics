@@ -14,6 +14,11 @@ angular.module('vidlytics').config(['$urlRouterProvider', '$stateProvider', '$lo
 		$locationProvider.html5Mode(true);
 
 		$stateProvider
+			.state('index', {
+				url: '/',
+				templateUrl: 'client/home/views/index.ng.html',
+				controller: 'HomeCtrl'
+			})
 			.state('newCustomer', {
 				url: '/customer/new',
 				templateUrl: 'client/customers/views/new/index.ng.html',
