@@ -70,7 +70,7 @@ window.addEventListener("load", function load(event){
 
 	window.jQuery.ajax = (function() {
 		console.log("overwriting");
-	    var original_func = jQuery.ajax;
+	    var original_func = window.jQuery.ajax;
 
         return function() {
 			console.log("ajax");
@@ -78,8 +78,6 @@ window.addEventListener("load", function load(event){
 			if (arguments.length == 1) {
 				console.log("length1");
 				var url = arguments[0]['url'];
-				console.log(url);
-				console.log(arguments[0]);
 
 				// // check if this is the url asking for the first m3u8
 				// if (url.indexOf('protocol=http&output=m3u8') > -1) {
@@ -106,7 +104,18 @@ window.addEventListener("load", function load(event){
 
 	})();
 
-	//playerInstance.onMeta( function(event) { console.log(event.metadata);});
+	playerInstance.onQualityLevels( function(array) {
+		console.log("new qualities");
+		for (key in array.levels) {
+			console.log(key);
+			console.log(array.levels[key]);
+		}
+	});
 
+	playerInstance.onMeta( function(event) { console.log(event.metadata);});
+
+
+	// Send a request to server to setup this client stream
+	//window.jQuery.post('http://localhost:3000/api/initialiseclient', {}, function(data, textStatus, jqxhr) { } );
 
 },false);
