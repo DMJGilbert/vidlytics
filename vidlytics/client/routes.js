@@ -33,6 +33,11 @@ angular.module('vidlytics').config(['$urlRouterProvider', '$stateProvider', '$lo
 						return $meteor.requireUser();
           			}]
 				}
+			})
+			.state('stream', {
+				url: '/stream/:id',
+				templateUrl: 'client/stream/views/index.ng.html',
+				controller: 'StreamCtrl'
 			});
 
 		$urlRouterProvider.otherwise('/');

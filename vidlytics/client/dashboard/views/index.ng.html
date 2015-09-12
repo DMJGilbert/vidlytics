@@ -7,13 +7,13 @@
 </div>
 
 <div class="container-vid">
-	<input class="streamSearch" placeholder="Filter streams..." type="text" />
+	<input ng-model="searchStreams.name" class="streamSearch" placeholder="Filter streams..." type="text" />
 
 	<a class="add" ng-click="showAddStream()"><i class="fa fa-plus"></i> Add stream</a>
 </div>
 
 <div id="stream-container">
-	<div class="stream" ng-repeat="stream in streams">
+	<div class="stream" ng-repeat="stream in streams | filter:searchStreams">
 		<img src="/images/no-screen.png">
 		<h5>{{stream.name}}</h5>
 		<i class="fa fa-user"></i> 10k
@@ -65,30 +65,3 @@
 	</div>
 </div>
 -->
-
-<div id="addStreamModal" class="ui modal">
-	<i class="close icon"></i>
-	<div class="header">
-		New stream
-	</div>
-	<div class="content">
-		<form class="ui form">
-			<div class="field">
-				<label>Stream name</label>
-				<input ng-model="newStream.name" type="text" name="stream-name" placeholder="Stream name">
-			</div>
-			<div class="field">
-				<label>Stream address</label>
-				<input ng-model="newStream.address" type="text" name="stream-address" placeholder="Stream address">
-			</div>
-		</form>
-	</div>
-	<div class="actions">
-		<div class="ui black deny button">
-			Cancel
-		</div>
-		<div ng-click="addStream();" class="ui positive right labeled icon button">
-			Save
-		</div>
-	</div>
-</div>

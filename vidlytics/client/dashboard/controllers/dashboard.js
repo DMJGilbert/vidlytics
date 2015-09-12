@@ -3,6 +3,8 @@ angular.module("vidlytics").controller("DashboardCtrl", ['$scope', '$stateParams
 
 		$scope.customer = $rootScope.currentUser;
 
+		$scope.searchStreams = {};
+
 		$meteor.subscribe('streams');
 		$scope.streams = $meteor.collection(Streams);
 
