@@ -6,8 +6,9 @@
 
 meteor-platform
 autopublish
-insecure
 angular
 semantic:ui
 fortawesome:fontawesome
 angularui:angular-ui-router
+accounts-password
+accounts-ui
