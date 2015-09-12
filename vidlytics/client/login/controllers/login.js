@@ -13,9 +13,8 @@ angular.module("vidlytics").controller("LoginCtrl", ['$scope', '$rootScope', '$s
 				Meteor.loginWithPassword($scope.email, $scope.password, function (err) {
 					if (err) {
 						return false;
-					} else if (!Meteor.user().emails[0].verified) {
-						return false;
 					} else {
+						$location.path('/dashboard');
 						return true;
 					}
 				});
