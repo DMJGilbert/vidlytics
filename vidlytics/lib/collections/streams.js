@@ -1,45 +1,56 @@
 Streams = new Mongo.Collection('streams');
 
+var btoa = Meteor.npmRequire('btoa')
+
+var base64urlEncode = function (unencoded) {
+	var encoded = btoa(unencoded);
+	return encoded.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+};
+
 Streams.helpers({});
 
-var AnalyticsSchema = new SimpleSchema({
-	cdn: {
-		type: String,
-		max: 100
+var EventSchema = new SimpleSchema({
+	message: {
+		type: String
 	},
-	ipAddress: {
-		type: String,
-		max: 100
+	res: {
+		type: String
 	},
-	bitRate: {
-		type: Number
+	bitrate: {
+		type: String
 	},
-	resolution: {
-		type: String,
-		max: 100
-	},
-	droppedFrames: {
-		type: Number
-	},
-	preBuffering: {
-		type: Number
-	},
-	buffering: {
-		type: Number
-	},
-	long: {
-		type: String,
-		max: 100
-	},
-	lat: {
-		type: String,
-		max: 100
+	timestamp: {
+		type: Date
 	}
 });
 
+var ViewerSchema = new SimpleSchema({
+	device: {
+		type: String
+	},
+	ip: {
+		type: String
+	},
+	long: {
+		type: String
+	},
+	lat: {
+		type: String
+	},
+	started: {
+		type: Date
+	},
+	event: {
+		type: [EventSchema],
+		optional: true
+	}
+});
 
 Streams.attachSchema({
 	customerId: {
+		type: String
+	},
+	base64: {
 		type: String
 	},
 	name: {
@@ -50,14 +61,15 @@ Streams.attachSchema({
 		type: String,
 		max: 200
 	},
-	analytics: {
-		type: [AnalyticsSchema],
+	viewers: {
+		type: [ViewerSchema],
 		optional: true
 	}
 });
 
 Streams.before.insert(function (userId, doc) {
 	doc.createdAt = new Date();
+	doc.base64 = base64urlEncode(doc.address);
 	doc.customerId = userId;
-	doc.analytics = [];
+	doc.viewers = [];
 });
