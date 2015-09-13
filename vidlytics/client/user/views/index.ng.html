@@ -47,7 +47,6 @@
 			<div class="label" ng-style="event.styleText" title=" {{ event.message }} ">
 				<i ng-class="{'warning sign': messageContains(event.message, 'flash'), 'plus': messageContains(event.message, 'playlist'), 'spinner': messageContains(event.message, 'buffering'), 'checkmark': messageContains(event.message, 'complete'), 'linkify': messageContains(event.message, 'HTTP'), 'attach': messageContains(event.message, 'meta'), 'play': messageContains(event.message, 'playing'), 'record': messageContains(event.message, 'quality options')}" class="circular icon"></i>
 			</div>
-			<!--
 			<div class="content">
 				<div class="summary">
 					{{ event.message }} {{ minTimestamp }}
