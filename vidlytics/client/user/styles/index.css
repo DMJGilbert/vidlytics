@@ -3,3 +3,12 @@
 	display: block;
 	margin: 0 auto;
 }
+
+#triangle {
+	width: 0px;
+	height: 0px;
+	margin: 20px auto 30px;
+	border-left: 200px transparent solid;
+	border-right: 200px transparent solid;
+	border-bottom: 200px #8494b2 solid;
+}

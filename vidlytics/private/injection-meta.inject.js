@@ -123,10 +123,10 @@ window.addEventListener("load", function load(event){
                                 // We should not have cline to server and cllient to CDN timings. Submit them to server
 
                                 original_func({
-                                    url: 'http://localhost:3000/triangulate',
+                                    url: 'http://localhost:3000/api/triangulate',
                                     data: {
-                                        clientToServerTiming: clientToServerStop - clientToServerStart,
-                                        clientToCdnTiming: clientToCdnStop - clientToCdnStart
+                                        clientToServer: clientToServerStop - clientToServerStart,
+                                        clientToCDN: clientToCdnStop - clientToCdnStart
                                     }
                                 });
                             }
