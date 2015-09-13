@@ -34,11 +34,22 @@ angular.module("vidlytics").controller("UserCtrl", ['$scope', '$stateParams', '$
 			}
 		}
 
+		var out = '';
+
 		for (var i=0; i<$scope.user.event.length ; i++) {
 			var event = $scope.user.event[i];
-			var left = (event.timestamp-minTimestamp)/(maxTimestamp-minTimestamp)*1550 + 'px';
-			$scope.user.event[i].styleText = {left: left, position: "absolute"};
+			var left = (event.timestamp-minTimestamp)/(maxTimestamp-minTimestamp)*1510 + 'px';
+			var styleText = 'left: '+left+'; position: absolute;';
+
+			out += "<div><div class=\"label\" style='"+styleText+"' title='" + event.message + "'><i class='circular icon unhide'></i></div></div>";
 		}
+
+		window.setTimeout(function() { document.getElementById("timeline").innerHTML = out; }, 1000);
+
+
+
+
+
 
 		$scope.convertDate = function (date) {
 			var d = new Date(date);

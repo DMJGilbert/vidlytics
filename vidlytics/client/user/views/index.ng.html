@@ -24,21 +24,8 @@
 	<h1 id="videoTitle">{{ user.ip }}</h1>
 	<h5 id="videoTitle">{{ user.city }}, {{ user.country }}</h5>
 
-	<div class="ui large" style="position: relative; width:1550px; margin-left:auto; margin-right:auto; height: 50px; background-color: light-green; border-radius: 25px; background: #8494b2; padding-left: 20px; padding-right: 20px; line-height: 50px;">
-		<div ng-repeat="event in user.event">
-			<div class="label" ng-style="event.styleText" title=" {{ event.message }} ">
-				<i ng-class="{'warning sign': messageContains(event.message, 'flash'), 'plus': messageContains(event.message, 'playlist'), 'spinner': messageContains(event.message, 'buffering'), 'checkmark': messageContains(event.message, 'complete'), 'linkify': messageContains(event.message, 'HTTP'), 'attach': messageContains(event.message, 'meta'), 'play': messageContains(event.message, 'playing'), 'record': messageContains(event.message, 'quality options')}" class="circular icon"></i>
-			</div>
-			<div class="content">
-				<div class="summary">
-<!--
-					<div class="date">
-						{{ convertDate(event.timestamp) }}
-					</div>
--->
-				</div>
-			</div>
-		</div>
+	<div id="timeline" class="ui large" style="position: relative; width:1550px; margin-left:auto; margin-right:auto; height: 50px; background-color: light-green; border-radius: 25px; background: #8494b2; padding-left: 20px; padding-right: 20px; line-height: 50px;">
+
 	</div>
 
 <br><br>
