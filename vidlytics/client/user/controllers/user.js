@@ -20,6 +20,26 @@ angular.module("vidlytics").controller("UserCtrl", ['$scope', '$stateParams', '$
 			}
 		}
 
+		var maxTimestamp = 0;
+		var minTimestamp = null;
+		for (var i=0; i<$scope.user.event.length ; i++) {
+			if ($scope.user.event[i].timestamp > maxTimestamp) {
+				maxTimestamp = $scope.user.event[i].timestamp;
+			}
+			if (!minTimestamp) {
+				minTimestamp = $scope.user.event[i].timestamp;
+			}
+			else if (minTimestamp > $scope.user.event[i].timestamp) {
+				minTimestamp = $scope.user.event[i].timestamp;
+			}
+		}
+
+		for (var i=0; i<$scope.user.event.length ; i++) {
+			var event = $scope.user.event[i];
+			var left = (event.timestamp-minTimestamp)/(maxTimestamp-minTimestamp)*1550 + 'px';
+			$scope.user.event[i].styleText = {left: left, position: "absolute"};
+		}
+
 		$scope.convertDate = function (date) {
 			var d = new Date(date);
 			return d.toLocaleString();
@@ -36,5 +56,7 @@ angular.module("vidlytics").controller("UserCtrl", ['$scope', '$stateParams', '$
 			Meteor.logout();
 			$location.path('/');
 		}
+
+
 
 	}]);
