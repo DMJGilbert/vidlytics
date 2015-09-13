@@ -37,6 +37,10 @@ var MetaSchema = new SimpleSchema({
 	width: {
 		type: String,
 		optional: true
+	},
+	currentLevel: {
+		type: String,
+		optional: true
 	}
 });
 
