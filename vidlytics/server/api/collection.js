@@ -280,7 +280,7 @@ var proxyEndpoint = function (req) {
 
 			var base64 = base64urlEncode(url);
 
-			newurl = 'http://localhost:3000/api/proxy/Streamzilla_Demo.m3u8?orig=' + base64 + "";
+			newurl = 'http://vidlytics.meteor.com/api/proxy/Streamzilla_Demo.m3u8?orig=' + base64 + "";
 
 			obj.data = newurl;
 
@@ -327,7 +327,7 @@ var proxyEndpoint = function (req) {
 			if (line.substr(0, 1) != '#') {
 				// This is a line that is a url of a file
 				var fullOrigLink = start + line;
-				var newurl = 'http://localhost:3000/api/proxy/' + line + '?orig=' + base64urlEncode(fullOrigLink) + "";
+				var newurl = 'http://vidlytics.meteor.com/api/proxy/' + line + '?orig=' + base64urlEncode(fullOrigLink) + "";
 				lines[i] = newurl;
 			}
 		}

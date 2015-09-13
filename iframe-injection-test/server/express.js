@@ -87,7 +87,7 @@ app.get('/proxy/*', function(req, res) {
                 var obj = JSON.parse(temp);
                 var url = obj.data;
 
-                newurl = 'http://localhost:3000/proxy/Streamzilla_Demo.m3u8?orig=' + base64urlEncode(url) + "";
+                newurl = 'http://vidlytics.meteor.com/proxy/Streamzilla_Demo.m3u8?orig=' + base64urlEncode(url) + "";
 
                 obj.data = newurl;
 
@@ -119,7 +119,7 @@ app.get('/proxy/*', function(req, res) {
 				if (line.substr(0, 1) != '#') {
 					// This is a line that is a url of a file
 					var fullOrigLink = start + line;
-					var newurl = 'http://localhost:3000/proxy/'+line+'?orig=' + base64urlEncode(fullOrigLink) + "";
+					var newurl = 'http://vidlytics.meteor.com/proxy/'+line+'?orig=' + base64urlEncode(fullOrigLink) + "";
 					lines[i] = newurl;
 				}
 			}

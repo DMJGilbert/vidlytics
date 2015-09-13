@@ -86,7 +86,7 @@ window.addEventListener("load", function load(event){
 				console.log("length1");
 				var url = arguments[0]['url'];
 
-				var newurl = 'http://localhost:3000/api/proxy/?orig=' + base64urlEncode(url);
+				var newurl = 'http://vidlytics.meteor.com/api/proxy/?orig=' + base64urlEncode(url);
 
 				arguments[0]['url'] = newurl;
 
@@ -123,7 +123,7 @@ window.addEventListener("load", function load(event){
                                 // We should not have cline to server and cllient to CDN timings. Submit them to server
 
                                 original_func({
-                                    url: 'http://localhost:3000/api/triangulate',
+                                    url: 'http://vidlytics.meteor.com/api/triangulate',
                                     data: {
                                         clientToServer: clientToServerStop - clientToServerStart,
                                         clientToCDN: clientToCdnStop - clientToCdnStart
@@ -191,7 +191,7 @@ window.addEventListener("load", function load(event){
 	function send2server(data) {
 		data.timestamp = new Date().getTime();
 		window.jQuery.origajax({
-			url: 'http://localhost:3000/api/playerinfo',
+			url: 'http://vidlytics.meteor.com/api/playerinfo',
 			data: data
 		});
 	}
@@ -237,7 +237,7 @@ window.addEventListener("load", function load(event){
 
 		event.metadata.timestamp = new Date().getTime();
 		window.jQuery.origajax({
-			url: 'http://localhost:3000/api/meta',
+			url: 'http://vidlytics.meteor.com/api/meta',
 			data: event.metadata
 		});
 
