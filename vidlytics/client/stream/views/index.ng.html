@@ -18,15 +18,14 @@
 	<iframe id="video" ng-hide="!stream.address" ng-src="{{ trustSrc(stream.address) }}"></iframe>
 
 	<div id="info">
-		<h2>Information</h2>
-		Users: {{ stream.viewers.length }}
+		<h2>Information</h2> Users: {{ stream.viewers.length }}
 		<br> iFrame:
 		<textarea>/api/video?origin={{stream.base64}}</textarea>
 	</div>
 
 	<div class="clearfix"></div>
 
-	<canvas style="width: 50%;" id="radar" class="chart chart-radar leftGraph" chart-data="streamData" chart-labels="streamLabels">
+	<canvas style="width: 50%;" id="radar" class="chart chart-radar leftGraph" chart-data="streamData" chart-series="streamSeries" chart-labels="streamLabels">
 	</canvas>
 	<canvas style="width: 50%;" id="line" class="chart chart-line rightGraph" chart-data="userData" chart-labels="userLabels" chart-legend="true" chart-series="userSeries" chart-click="onClick">
 	</canvas>
@@ -182,10 +181,10 @@
 
 			var mapOptions = {
 				center: {
-					lat: -34.397,
-					lng: 150.644
+					lat: 34.000,
+					lng: 0.000
 				},
-				zoom: 8,
+				zoom: 2,
 				styles: styles,
 
 				panControl: false, // Set to false to disable
@@ -210,18 +209,24 @@
 				url: '/images/user.png'
 			}
 
-			var marker = new google.maps.Marker({
-				position: {
-					lat: -34.397,
-					lng: 150.644
-				},
-				map: map,
-				icon: image,
-				_id: 123
-			});
+			var markers = [];
+			var i = 0;
+			stream.viewers.forEach(function () {
+				markers[i] = new google.maps.Marker({
+					position: {
+						lat: 34.000,
+						lng: 0.000
+					},
+					map: map,
+					icon: image,
+					_id: stream.viewers[i]._id
+				});
 
-			google.maps.event.addListener(marker, "click", function () {
-				window.location = '/stream/' + stream._id + '/user/' + this._id;
+				google.maps.event.addListener(markers[i], "click", function () {
+					window.location = '/stream/' + stream._id + '/user/' + this._id;
+				});
+
+				i += 1;
 			});
 		}
 	</script>

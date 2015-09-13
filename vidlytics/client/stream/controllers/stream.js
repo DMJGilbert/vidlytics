@@ -12,6 +12,53 @@ angular.module("vidlytics").controller("StreamCtrl", ['$scope', '$stateParams', 
 			if ($scope.streams[i]._id == $location.path().split("/")[2]) {
 				$scope.stream = $scope.streams[i];
 				stream = $scope.streams[i];
+
+				$scope.streamLabels = ["180p", "280p", "400p", "480p", "720p", "1080p"];
+
+				$scope.streamData = [
+				[0, 0, 0, 0, 0, 0]
+			];
+
+				$scope.today = new Date();
+				$scope.userLabels = [];
+
+				$scope.today.setDate($scope.today.getDate() - 4);
+				$scope.userLabels.push($scope.today.toLocaleDateString());
+
+				$scope.today.setDate($scope.today.getDate() + 1);
+				$scope.userLabels.push($scope.today.toLocaleDateString());
+
+				$scope.today.setDate($scope.today.getDate() + 1);
+				$scope.userLabels.push($scope.today.toLocaleDateString());
+
+				$scope.today.setDate($scope.today.getDate() + 1);
+				$scope.userLabels.push($scope.today.toLocaleDateString());
+
+				$scope.userLabels.push("Today");
+
+				$scope.userSeries = ['No. of users'];
+
+				$scope.userData = [
+				[0, 0, 0, 0, 0]
+			];
+
+				for (var j = 0; j < $scope.stream.viewers.length; j += 1) {
+					$scope.streamData[$scope.stream.viewers[i].resolution] += 1;
+				}
+
+				for (var j = 0; j < $scope.stream.viewers.length; j += 1) {
+					var date1 = new Date();
+					var date2 = new Date($scope.stream.viewers[j].time);
+					var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+					var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+					if (5 - diffDays > -1) {
+						$scope.userData[5 - diffDays] += 1;
+					} else {
+						break;
+					}
+				}
+
 				break;
 			}
 		}
@@ -24,17 +71,6 @@ angular.module("vidlytics").controller("StreamCtrl", ['$scope', '$stateParams', 
 			Meteor.logout();
 			$location.path('/');
 		}
-
-		$scope.streamLabels = ["180p", "280p", "400p", "480p", "720p", "1080p"];
-		$scope.streamData = [
-				[65, 59, 90, 81, 56, 55]
-			];
-
-		$scope.userLabels = ["January", "February", "March", "April", "May", "June", "July"];
-		$scope.userSeries = ['No. of Users'];
-		$scope.userData = [
-				[0, 0, 1, 2, 2, 3, 5]
-			];
 
 		$scope.removeStream = function () {
 			for (var i = 0; i < $scope.streams.length; i += 1) {
