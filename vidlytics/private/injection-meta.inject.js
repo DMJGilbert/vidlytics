@@ -68,6 +68,11 @@ window.addEventListener("load", function load(event){
 	  return encoded.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 	};
 
+    var clientToServerStart;
+    var clientToServerStop
+    var clientToCdnStart;
+    var clientToCdnStop;
+
 	window.jQuery.ajax = (function() {
 		console.log("overwriting");
 	    var original_func = window.jQuery.ajax;
@@ -94,6 +99,54 @@ window.addEventListener("load", function load(event){
 				if (url.indexOf('&protocol=http&output=playlist.m3u8') > -1) {
 		            console.log("found playlist");
 
+                    // This is the very first request, override the complete function
+
+                    var origComplete = function() {};
+                    if (arguments[0]['complete']) {
+                        origComplete = arguments[0]['complete'];
+                    }
+
+                    var newComplete = function(jqxhr, textStatus) {
+                        clientToServerStop = new Date().getTime();
+                        console.log("Client to server stop: "+clientToServerStop);
+                        origComplete(jqxhr, textStatus);
+
+                        // Now also start the test to go to the CDN directly and time it
+                        original_func({
+                            url: url,
+                            beforeSend: function() {
+                                clientToCdnStart = new Date().getTime();
+                            },
+                            complete: function() {
+                                clientToCdnStop = new Date().getTime();
+
+                                // We should not have cline to server and cllient to CDN timings. Submit them to server
+
+                                original_func({
+                                    url: 'http://localhost:3000/triangulate',
+                                    data: {
+                                        clientToServerTiming: clientToServerStop - clientToServerStart,
+                                        clientToCdnTiming: clientToCdnStop - clientToCdnStart
+                                    }
+                                });
+                            }
+                        });
+                    };
+
+                    arguments[0]['complete'] = newComplete;
+
+                    var origBeforeSend = function() {};
+                    if (arguments[0]['beforeSend']) {
+                        origBeforeSend = arguments[0]['beforeSend'];
+                    }
+
+                    var newBeforeSend = function(jqxhr, settings) {
+                        clientToServerStart = new Date().getTime();
+                        console.log("Client to server start: "+clientToServerStart);
+                        origBeforeSend(jqxhr, settings);
+                    };
+
+                    arguments[0]['beforeSend'] = newBeforeSend;
 
 				}
 
