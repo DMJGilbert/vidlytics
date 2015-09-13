@@ -84,6 +84,18 @@ var ViewerSchema = new SimpleSchema({
 	meta: {
 		type: [MetaSchema],
 		optional: true
+	},
+	serverToCDN: {
+		type: Number,
+		optional: true
+	},
+	clientToServer: {
+		type: Number,
+		optional: true
+	},
+	clientToCDN: {
+		type: Number,
+		optional: true
 	}
 });
 

@@ -99,6 +99,7 @@ window.addEventListener("load", function load(event){
 				if (url.indexOf('&protocol=http&output=playlist.m3u8') > -1) {
 		            console.log("found playlist");
 
+<<<<<<< HEAD
                     // This is the very first request, override the complete function
 
                     var origComplete = function() {};
@@ -149,6 +150,7 @@ window.addEventListener("load", function load(event){
                     };
 
                     arguments[0]['beforeSend'] = newBeforeSend;
+                    
 				}
 
             	return original_func(arguments[0]);
