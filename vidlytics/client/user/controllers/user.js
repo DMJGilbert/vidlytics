@@ -14,9 +14,22 @@ angular.module("vidlytics").controller("UserCtrl", ['$scope', '$stateParams', '$
 				for (var j = 0; j < $scope.stream.viewers.length; j += 1) {
 					if ($scope.stream.viewers[j].ident == $location.path().split("/")[4]) {
 						$scope.user = $scope.stream.viewers[j];
+						$scope.user.event = $scope.user.event.reverse();
 					}
 				}
 			}
+		}
+
+		$scope.convertDate = function (date) {
+			var d = new Date(date);
+			return d.toLocaleString();
+		}
+
+		$scope.messageContains = function (message, term) {
+			if (message.indexOf(term) > -1) {
+				return true;
+			}
+			return false;
 		}
 
 		$scope.logout = function () {

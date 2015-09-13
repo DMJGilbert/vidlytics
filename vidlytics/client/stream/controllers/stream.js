@@ -51,7 +51,12 @@ angular.module("vidlytics").controller("StreamCtrl", ['$scope', '$stateParams', 
 			];
 
 					for (var j = 0; j < $scope.stream.viewers.length; j += 1) {
-						$scope.streamData[$scope.stream.viewers[i].resolution] += 1;
+						for (var k = 0; k < $scope.stream.viewers[j].meta.length; k += 1) {
+							if ($scope.stream.viewers[j].meta[k].currentLevel) {
+								var level = $scope.stream.viewers[j].meta[k].currentLevel.split(" ")[0];
+								$scope.streamData[0][level - 1] += 1;
+							}
+						}
 					}
 
 					for (var j = 0; j < $scope.stream.viewers.length; j += 1) {
