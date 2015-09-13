@@ -214,12 +214,12 @@
 			stream.viewers.forEach(function () {
 				markers[i] = new google.maps.Marker({
 					position: {
-						lat: 34.000,
-						lng: 0.000
+						lat: parseFloat(stream.viewers[i].lat),
+						lng: parseFloat(stream.viewers[i].long)
 					},
 					map: map,
 					icon: image,
-					_id: stream.viewers[i]._id
+					_id: stream.viewers[i].ident
 				});
 
 				google.maps.event.addListener(markers[i], "click", function () {
