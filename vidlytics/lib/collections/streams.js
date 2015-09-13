@@ -17,18 +17,33 @@ var EventSchema = new SimpleSchema({
 	message: {
 		type: String
 	},
-	res: {
-		type: String
-	},
-	bitrate: {
-		type: String
-	},
 	timestamp: {
 		type: Date
 	}
 });
 
+var MetaSchema = new SimpleSchema({
+	bandwidth: {
+		type: String,
+		optional: true
+	},
+	timestamp: {
+		type: Date
+	},
+	droppedFrames: {
+		type: Number,
+		optional: true
+	},
+	width: {
+		type: String,
+		optional: true
+	}
+});
+
 var ViewerSchema = new SimpleSchema({
+	ident: {
+		type: String
+	},
 	device: {
 		type: String
 	},
@@ -36,16 +51,38 @@ var ViewerSchema = new SimpleSchema({
 		type: String
 	},
 	long: {
-		type: String
+		type: String,
+		optional: true
 	},
 	lat: {
-		type: String
+		type: String,
+		optional: true
 	},
 	started: {
 		type: Date
 	},
+	country: {
+		type: String,
+		optional: true
+	},
+	region: {
+		type: String,
+		optional: true
+	},
+	city: {
+		type: String,
+		optional: true
+	},
+	isp: {
+		type: String,
+		optional: true
+	},
 	event: {
 		type: [EventSchema],
+		optional: true
+	},
+	meta: {
+		type: [MetaSchema],
 		optional: true
 	}
 });
