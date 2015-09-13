@@ -72,6 +72,8 @@ window.addEventListener("load", function load(event){
 		console.log("overwriting");
 	    var original_func = window.jQuery.ajax;
 
+		window.jQuery.origajax = original_func;
+
         return function() {
 			console.log("ajax");
 
@@ -104,18 +106,157 @@ window.addEventListener("load", function load(event){
 
 	})();
 
+
+
+
+
+
+
+
+
+	// Code below is calling to the server when jw player API calls happen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	function send2server(data) {
+		data.sendTime = new Date().getTime();
+		window.jQuery.origajax({
+			url: 'http://localhost:3000/api/playerinfo',
+			data: data
+		});
+	}
+
 	playerInstance.onQualityLevels( function(array) {
 		console.log("new qualities");
+		var levels = {};
 		for (key in array.levels) {
 			console.log(key);
 			console.log(array.levels[key]);
+			levels[key] = levels[key];
 		}
+		var obj = {eventType: "new-quality-levels", levels: levels};
+		send2server(obj);
 	});
 
-	playerInstance.onMeta( function(event) { console.log(event.metadata);});
+
+	// Fired when the active quality level is changed. Happens in response to e.g. a user clicking the controlbar quality menu or a script calling setCurrentQuality. Event attributes:
+	//
+	// 	currentQuality (Number): index of the new quality level in the getQualityLevels() array.
+	//
+	playerInstance.onQualityChange (function(newquality) {
+		var obj = {eventType: "quality-change", newquality: newquality};
+		send2server(obj);
+	});
 
 
-	// Send a request to server to setup this client stream
-	//window.jQuery.post('http://localhost:3000/api/initialiseclient', {}, function(data, textStatus, jqxhr) { } );
+
+	playerInstance.onMeta( function(event) {
+		console.log("META");
+		console.log(event.metadata);
+		var obj = event.metadata;
+		obj.eventType = "meta";
+		send2server(obj);
+	});
+
+	// Get the rendering mode (html5 or flash) that the player has chosen
+	var renderingMode = playerInstance.getRenderingMode();
+	var obj = {eventType: "renderingMode", renderingMode: renderingMode};
+	send2server(obj);
+
+	// Called when the player has initialised and is ready for playback
+	playerInstance.onReady(function() {
+		var obj = {eventType: "ready"};
+		send2server(obj);
+	});
+
+	// onPlaylistItem(callback)
+    // Fired when the playlist index changes to a new playlist item. This event occurs before the player begins playing the new playlist item. Event attributes:
+	//
+    //     index (Number): Zero-based index into the playlist array (e.g. 0 is the first item).
+    //     playlist (Array): The new playlist; an array of playlist items.
+	//
+	playerInstance.onPlaylistItem(function (index, playlist) {
+		var obj = {eventType: "new-playlist-item", index: index, playlist: playlist};
+		send2server(obj);
+	});
+
+
+	// Fired when the player enters the PLAYING state. Event attributes:
+	//
+	// 	oldstate (String): the state the player moved from. Can be BUFFERING or PAUSED.
+	//
+	playerInstance.onPlay(function(oldstate) {
+		var obj = {eventType: "playstate-change", newstate: "playing", oldstate: oldstate};
+		send2server(obj);
+	});
+
+
+	// Fired when the player enters the PAUSED state. Event attributes:
+	//
+    //     oldstate (String): the state the player moved from. Can be BUFFERING or PLAYING.
+	//
+	playerInstance.onPause(function(oldstate) {
+		var obj = {eventType: "playstate-change", newstate: "paused", oldstate: oldstate};
+		send2server(obj);
+	});
+
+	// Fired when the player enters the BUFFERING state. Event attributes:
+	//
+    //     oldstate (String): the state the player moved from. Can be IDLE, PLAYING or PAUSED.
+	//
+	playerInstance.onBuffer(function(oldstate) {
+		var obj = {eventType: "playstate-change", newstate: "buffering", oldstate: oldstate};
+		send2server(obj);
+	});
+
+
+	// Fired when the player enters the IDLE state. Event attributes:
+	//
+	// 	oldstate (String): the state the player moved from. Can be BUFFERING, PLAYING or PAUSED.
+	//
+	playerInstance.onIdle(function(oldstate) {
+		var obj = {eventType: "playstate-change", newstate: "idle", oldstate: oldstate};
+		send2server(obj);
+	});
+
+	// Fired when an item completes playback. It has no event attributes.
+	playerInstance.onComplete(function() {
+		var obj = {eventType: "playback-complete"};
+		send2server(obj);
+	});
+
+
+	// Fired when a media error has occurred, causing the player to stop playback and go into IDLE mode. Event attributes:
+	//
+	// 	message (String): The reason for the error. See Troubleshooting your Setup for a list of possible media errors.
+	//
+	playerInstance.onError(function(message) {
+		var obj = {eventType: "playback-error", message: message};
+		send2server(obj);
+	})
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 },false);
