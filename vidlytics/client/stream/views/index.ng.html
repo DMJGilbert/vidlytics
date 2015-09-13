@@ -31,6 +31,13 @@
 	</canvas>
 
 	<div id="map"></div>
+	<div id="userContainer">
+		<div ng-repeat="user in stream.viewers">
+			<a class="user" ng-href="/stream/{{ stream._id }}/user/{{ user.ident }}">
+			{{user.ip}} - {{user.city}}, {{user.country}}
+		</a>
+		</div>
+	</div>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWvj_ePGqASr2yz3h5rs19v3GyWPuAUd8&sensor=false&callback=initialise">
 	</script>
 	<script>

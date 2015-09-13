@@ -12,6 +12,15 @@
 </div>
 
 <div id="stream-container">
+
+	<div class="triangle-contain" style="margin-bottom: 100px;">
+		<div id="triangle"></div>
+
+		<div id="clientToCDN" style="position: absolute;left: 37%;top: 269px;">Client to CDN: {{ user.clientToCDN }}ms</div>
+		<div id="clientToServer" style="position: absolute;left: 57%;top: 269px;">Client to Server: {{ user.clientToServer }}ms</div>
+		<div id="serverToCDN" style="position: absolute;left: 47%;">Server to CDN: {{ user.serverToCDN }}ms</div>
+	</div>
+
 	<h1 id="videoTitle">{{ user.ip }}</h1>
 	<h5 id="videoTitle">{{ user.city }}, {{ user.country }}</h5>
 
@@ -30,5 +39,4 @@
 			</div>
 		</div>
 	</div>
-
 </div>
