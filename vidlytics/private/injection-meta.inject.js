@@ -227,9 +227,12 @@ window.addEventListener("load", function load(event){
 		console.log(event.metadata);
 		var obj = event.metadata;
 		obj.eventType = "meta";
-        obj.message = "New meta data.";
+        obj.message = "New meta data";
         if (event.metadata.bandwidth) {
-            obj.message += " Bandwidth: "+event.metadata.bandwidth;
+            obj.message += ". Bandwidth: "+event.metadata.bandwidth;
+        }
+        if (event.metadata.droppedFrames) {
+            obj.message += ". Dropped frames: "+event.metadata.droppedFrames;
         }
 
 		event.metadata.timestamp = new Date().getTime();
