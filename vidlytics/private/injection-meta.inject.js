@@ -199,12 +199,14 @@ window.addEventListener("load", function load(event){
 	playerInstance.onQualityLevels( function(array) {
 		console.log("new qualities");
 		var levels = {};
+        var numQualities=0;
 		for (key in array.levels) {
 			console.log(key);
 			console.log(array.levels[key]);
 			levels[key] = levels[key];
+            numQualities++;
 		}
-		var obj = {eventType: "new-quality-levels", levels: levels, message: levels.length+" new quality options have been added"};
+		var obj = {eventType: "new-quality-levels", levels: levels, message: numQualities+" new quality options have been added"};
 		send2server(obj);
 	});
 
@@ -225,9 +227,12 @@ window.addEventListener("load", function load(event){
 		console.log(event.metadata);
 		var obj = event.metadata;
 		obj.eventType = "meta";
-        obj.message = "New meta data.";
+        obj.message = "New meta data";
         if (event.metadata.bandwidth) {
-            obj.message += " Bandwidth: "+event.metadata.bandwidth;
+            obj.message += ". Bandwidth: "+event.metadata.bandwidth;
+        }
+        if (event.metadata.droppedFrames) {
+            obj.message += ". Dropped frames: "+event.metadata.droppedFrames;
         }
 
 		event.metadata.timestamp = new Date().getTime();
