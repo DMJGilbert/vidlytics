@@ -130,7 +130,7 @@ window.addEventListener("load", function load(event){
 
 
 	function send2server(data) {
-		data.sendTime = new Date().getTime();
+		data.timestamp = new Date().getTime();
 		window.jQuery.origajax({
 			url: 'http://localhost:3000/api/playerinfo',
 			data: data
@@ -145,7 +145,7 @@ window.addEventListener("load", function load(event){
 			console.log(array.levels[key]);
 			levels[key] = levels[key];
 		}
-		var obj = {eventType: "new-quality-levels", levels: levels};
+		var obj = {eventType: "new-quality-levels", levels: levels, string: levels.length+" new quality options have been added"};
 		send2server(obj);
 	});
 
@@ -155,7 +155,7 @@ window.addEventListener("load", function load(event){
 	// 	currentQuality (Number): index of the new quality level in the getQualityLevels() array.
 	//
 	playerInstance.onQualityChange (function(newquality) {
-		var obj = {eventType: "quality-change", newquality: newquality};
+		var obj = {eventType: "quality-change", newquality: newquality, string: "Changed to quality level: "+newquality};
 		send2server(obj);
 	});
 
@@ -166,17 +166,21 @@ window.addEventListener("load", function load(event){
 		console.log(event.metadata);
 		var obj = event.metadata;
 		obj.eventType = "meta";
+        obj.string = "New meta data.";
+        if (event.metadata.bandwidth) {
+            obj.string += " Bandwidth: "+event.metadata.bandwidth;
+        }
 		send2server(obj);
 	});
 
 	// Get the rendering mode (html5 or flash) that the player has chosen
 	var renderingMode = playerInstance.getRenderingMode();
-	var obj = {eventType: "renderingMode", renderingMode: renderingMode};
+	var obj = {eventType: "renderingMode", renderingMode: renderingMode, string: "Using rendering: "+renderingMode};
 	send2server(obj);
 
 	// Called when the player has initialised and is ready for playback
 	playerInstance.onReady(function() {
-		var obj = {eventType: "ready"};
+		var obj = {eventType: "ready", string: "Player ready"};
 		send2server(obj);
 	});
 
@@ -187,7 +191,7 @@ window.addEventListener("load", function load(event){
     //     playlist (Array): The new playlist; an array of playlist items.
 	//
 	playerInstance.onPlaylistItem(function (index, playlist) {
-		var obj = {eventType: "new-playlist-item", index: index, playlist: playlist};
+		var obj = {eventType: "new-playlist-item", index: index, playlist: playlist, string: "Item added to playlist"};
 		send2server(obj);
 	});
 
@@ -197,7 +201,7 @@ window.addEventListener("load", function load(event){
 	// 	oldstate (String): the state the player moved from. Can be BUFFERING or PAUSED.
 	//
 	playerInstance.onPlay(function(oldstate) {
-		var obj = {eventType: "playstate-change", newstate: "playing", oldstate: oldstate};
+		var obj = {eventType: "playstate-change", newstate: "playing", oldstate: oldstate, string:"Now playing video"};
 		send2server(obj);
 	});
 
@@ -207,7 +211,7 @@ window.addEventListener("load", function load(event){
     //     oldstate (String): the state the player moved from. Can be BUFFERING or PLAYING.
 	//
 	playerInstance.onPause(function(oldstate) {
-		var obj = {eventType: "playstate-change", newstate: "paused", oldstate: oldstate};
+		var obj = {eventType: "playstate-change", newstate: "paused", oldstate: oldstate, string:"Now paused video"};
 		send2server(obj);
 	});
 
@@ -216,7 +220,7 @@ window.addEventListener("load", function load(event){
     //     oldstate (String): the state the player moved from. Can be IDLE, PLAYING or PAUSED.
 	//
 	playerInstance.onBuffer(function(oldstate) {
-		var obj = {eventType: "playstate-change", newstate: "buffering", oldstate: oldstate};
+		var obj = {eventType: "playstate-change", newstate: "buffering", oldstate: oldstate, string:"Now buffering"};
 		send2server(obj);
 	});
 
@@ -226,13 +230,13 @@ window.addEventListener("load", function load(event){
 	// 	oldstate (String): the state the player moved from. Can be BUFFERING, PLAYING or PAUSED.
 	//
 	playerInstance.onIdle(function(oldstate) {
-		var obj = {eventType: "playstate-change", newstate: "idle", oldstate: oldstate};
+		var obj = {eventType: "playstate-change", newstate: "idle", oldstate: oldstate, string:"Now idle"};
 		send2server(obj);
 	});
 
 	// Fired when an item completes playback. It has no event attributes.
 	playerInstance.onComplete(function() {
-		var obj = {eventType: "playback-complete"};
+		var obj = {eventType: "playback-complete", string:"Playback complete"};
 		send2server(obj);
 	});
 
@@ -242,13 +246,9 @@ window.addEventListener("load", function load(event){
 	// 	message (String): The reason for the error. See Troubleshooting your Setup for a list of possible media errors.
 	//
 	playerInstance.onError(function(message) {
-		var obj = {eventType: "playback-error", message: message};
+		var obj = {eventType: "playback-error", message: message, string:"Playback error: "+message};
 		send2server(obj);
 	})
-
-
-
-
 
 
 
