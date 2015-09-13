@@ -81,15 +81,21 @@ window.addEventListener("load", function load(event){
 				console.log("length1");
 				var url = arguments[0]['url'];
 
-				// // check if this is the url asking for the first m3u8
-				// if (url.indexOf('protocol=http&output=m3u8') > -1) {
-				// 	console.log("found playlist");
-				// 	// replace their url with our own
-				// }
-
 				var newurl = 'http://localhost:3000/api/proxy/?orig=' + base64urlEncode(url);
 
 				arguments[0]['url'] = newurl;
+
+                console.log("just before check");
+
+                // check if this is the url asking for the first m3u8
+
+                console.log(url);
+
+				if (url.indexOf('&protocol=http&output=playlist.m3u8') > -1) {
+		            console.log("found playlist");
+
+
+				}
 
             	return original_func(arguments[0]);
 			}
@@ -170,13 +176,13 @@ window.addEventListener("load", function load(event){
         if (event.metadata.bandwidth) {
             obj.message += " Bandwidth: "+event.metadata.bandwidth;
         }
-		
+
 		event.metadata.timestamp = new Date().getTime();
 		window.jQuery.origajax({
 			url: 'http://localhost:3000/api/meta',
 			data: event.metadata
 		});
-		
+
 		send2server(obj);
 	});
 
