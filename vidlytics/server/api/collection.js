@@ -82,36 +82,6 @@ Api.addRoute('meta', {
 	}
 });
 
-Api.addRoute('meta', {
-	authRequired: false
-}, {
-	get: function () {
-		var cookie = this.request.headers['cookie'];
-
-		var ident = readCookie(cookie, 'ident');
-
-		var stream = Streams.find({
-			'viewers.ident': ident
-		}).fetch()[0];
-
-		console.log(this);
-
-		var newStream = stream;
-		var data = this.queryParams;
-		data.timestamp = new Date(parseInt(data.timestamp));
-		stream.viewers.forEach(function (view, index) {
-			if (view.ident == ident) {
-				stream.viewers[index].meta.push(data);
-			}
-		});
-		stream.$save();
-
-		return {
-			success: true
-		}
-	}
-});
-
 Api.addRoute('triangulate', {
 	authRequired: false
 }, {
