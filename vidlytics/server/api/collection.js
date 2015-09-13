@@ -82,6 +82,65 @@ Api.addRoute('meta', {
 	}
 });
 
+Api.addRoute('meta', {
+	authRequired: false
+}, {
+	get: function () {
+		var cookie = this.request.headers['cookie'];
+
+		var ident = readCookie(cookie, 'ident');
+
+		var stream = Streams.find({
+			'viewers.ident': ident
+		}).fetch()[0];
+
+		console.log(this);
+
+		var newStream = stream;
+		var data = this.queryParams;
+		data.timestamp = new Date(parseInt(data.timestamp));
+		stream.viewers.forEach(function (view, index) {
+			if (view.ident == ident) {
+				stream.viewers[index].meta.push(data);
+			}
+		});
+		stream.$save();
+
+		return {
+			success: true
+		}
+	}
+});
+
+Api.addRoute('triangulate', {
+	authRequired: false
+}, {
+	get: function () {
+		var cookie = this.request.headers['cookie'];
+
+		var ident = readCookie(cookie, 'ident');
+
+		var stream = Streams.find({
+			'viewers.ident': ident
+		}).fetch()[0];
+
+		var newStream = stream;
+		var data = this.queryParams;
+
+		stream.viewers.forEach(function (view, index) {
+			if (view.ident == ident) {
+				stream.viewers[index].clientToServer = data.clientToServer;
+				stream.viewers[index].clientToCDN = data.clientToCDN;
+			}
+		});
+		stream.$save();
+
+		return {
+			success: true
+		}
+	}
+});
+
 
 //EG: /api/video?origin=aHR0cDovL3Jyci5zei54bGNkbi5jb20vP2FjY291bnQ9c3RyZWFtemlsbGEmZmlsZT1TdHJlYW16aWxsYV9EZW1vLnNtaWwmdHlwZT1zdHJlYW1pbmcmc2VydmljZT11c3AmcHJvdG9jb2w9aHR0cHMmb3V0cHV0PXBsYXllciZwb3N0ZXI9U3RyZWFtemlsbGFfRGVtby5wbmc
 Api.addRoute('video', {
@@ -98,6 +157,8 @@ Api.addRoute('video', {
 		}
 		var geoRequest = extractGeo(Meteor.http.get('https://iplocation.net?query=' + ip).content);
 
+		var startTime = new Date().getTime();
+		var request = Meteor.http.get(url);
 
 
 		Streams.update({
@@ -116,12 +177,11 @@ Api.addRoute('video', {
 					isp: geoRequest.isp,
 					started: new Date(),
 					event: [],
-					meta: []
+					meta: [],
+					serverToCDN: new Date().getTime() - startTime
 				}
 			}
 		});
-
-		var request = Meteor.http.get(url);
 		var injectThis = fs.readFileSync('../server/assets/app/injection-meta.js.inject', 'utf8');
 		var injected = request.content.replace('<head>', '<head><base href="' + url + '" target="_blank"><script>' + injectThis + '</script>');
 		this.response.writeHead(200, {
