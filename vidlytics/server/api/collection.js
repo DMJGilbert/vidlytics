@@ -144,7 +144,7 @@ Api.addRoute('video', {
 					started: new Date(),
 					event: [],
 					meta: [],
-					serverToCDN: endTime - startTime
+					serverToCDN: parseInt(endTime - startTime)
 				}
 			}
 		});
