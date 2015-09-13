@@ -121,18 +121,6 @@ Api.addRoute('video', {
 
 		var ident = Math.random() * 10000;
 
-		var startTime = new Date().getTime();
-		var request = Meteor.http.get(url);
-		var endTime = new Date().getTime();
-
-		var injectThis = fs.readFileSync('../server/assets/app/injection-meta.inject.js', 'utf8');
-		var injected = request.content.replace('<head>', '<head><base href="' + url + '" target="_blank"><script>' + injectThis + '</script>');
-		this.response.writeHead(200, {
-			'Set-Cookie': 'ident=' + ident + ';Path=/;'
-		});
-		this.response.write(injected);
-		this.done()
-
 
 		var ip = this.request.headers['x-forwarded-for'];
 		if (ip == "127.0.0.1") {
@@ -160,6 +148,18 @@ Api.addRoute('video', {
 				}
 			}
 		});
+
+		var startTime = new Date().getTime();
+		var request = Meteor.http.get(url);
+		var endTime = new Date().getTime();
+
+		var injectThis = fs.readFileSync('../server/assets/app/injection-meta.inject.js', 'utf8');
+		var injected = request.content.replace('<head>', '<head><base href="' + url + '" target="_blank"><script>' + injectThis + '</script>');
+		this.response.writeHead(200, {
+			'Set-Cookie': 'ident=' + ident + ';Path=/;'
+		});
+		this.response.write(injected);
+		this.done()
 	}
 });
 
