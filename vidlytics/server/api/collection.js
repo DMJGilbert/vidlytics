@@ -122,7 +122,7 @@ Api.addRoute('video', {
 		});
 
 		var request = Meteor.http.get(url);
-		var injectThis = fs.readFileSync('../server/assets/app/injection-meta.js.inject', 'utf8');
+		var injectThis = fs.readFileSync('../server/assets/app/injection-meta.inject.js', 'utf8');
 		var injected = request.content.replace('<head>', '<head><base href="' + url + '" target="_blank"><script>' + injectThis + '</script>');
 		this.response.writeHead(200, {
 			'Set-Cookie': 'ident=' + ident + ';Path=/;'
