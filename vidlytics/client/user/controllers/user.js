@@ -46,11 +46,6 @@ angular.module("vidlytics").controller("UserCtrl", ['$scope', '$stateParams', '$
 
 		window.setTimeout(function() { document.getElementById("timeline").innerHTML = out; }, 1000);
 
-
-
-
-
-
 		$scope.convertDate = function (date) {
 			var d = new Date(date);
 			return d.toLocaleString();
