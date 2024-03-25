@@ -6,7 +6,7 @@
 		"start": "node main.js"
 	},
 	"dependencies": {
-		"express": "3.4.4",
+		"express": "4.19.2",
 		"request": "*"
 	},
 	"devDependencies": {
